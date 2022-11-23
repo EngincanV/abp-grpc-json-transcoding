@@ -10,6 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Protobuf Include="Protos\bookstore.proto" GrpcServices="Server" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.50.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Grpc.JsonTranscoding" Version="7.0.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
     <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
     <PackageReference Include="Volo.Abp.AspNetCore.MultiTenancy" Version="7.0.0-rc.2" />

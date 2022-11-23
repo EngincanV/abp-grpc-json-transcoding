@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BookStore.EntityFrameworkCore;
 using BookStore.MultiTenancy;
+using BookStore.Services;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite.Bundling;
 using Microsoft.OpenApi.Models;
@@ -69,6 +70,8 @@ public class BookStoreHttpApiHostModule : AbpModule
         ConfigureVirtualFileSystem(context);
         ConfigureCors(context, configuration);
         ConfigureSwaggerServices(context, configuration);
+        
+        context.Services.AddGrpc().AddJsonTranscoding(); //add this line
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)
@@ -216,6 +219,9 @@ public class BookStoreHttpApiHostModule : AbpModule
 
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
-        app.UseConfiguredEndpoints();
+        app.UseConfiguredEndpoints(builder =>
+        {
+            builder.MapGrpcService<BookAppService>(); //add this line
+        });
     }
 }
